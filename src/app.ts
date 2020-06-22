@@ -1,23 +1,22 @@
-import express from "express";
-import compression from "compression"; // compresses requests
-import session from "express-session";
+import bluebird from "bluebird";
 import bodyParser from "body-parser";
-import lusca from "lusca";
+import compression from "compression"; // compresses requests
 import mongo from "connect-mongo";
+import express from "express";
 import flash from "express-flash";
-import path from "path";
+import session from "express-session";
+import lusca from "lusca";
 import mongoose from "mongoose";
 import passport from "passport";
-import bluebird from "bluebird";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
 const MongoStore = mongo(session);
 
 // Controllers (route handlers)
-import * as homeController from "./controllers/home";
-import * as userController from "./controllers/user";
 import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
+import * as homeController from "./controllers/home";
+import * as userController from "./controllers/user";
 
 // API keys and Passport configuration
 import * as passportConfig from "./config/passport";
@@ -85,10 +84,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-app.use(
-  express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
-);
 
 /**
  * Primary app routes.
